@@ -29,7 +29,7 @@ import org.xml.sax.SAXException;
 
 /**
  *
- * @author ewawenl
+ * @author Allan
  */
 public class ContactList {
     public ContactList(){
@@ -37,7 +37,7 @@ public class ContactList {
         initFromXml();
     }
     private void initFromXml(){
-        DocumentBuilderFactory builderFactory = 
+        DocumentBuilderFactory builderFactory =
                 DocumentBuilderFactory.newInstance();
         try {
             DocumentBuilder  builder = builderFactory.newDocumentBuilder();
@@ -68,7 +68,7 @@ public class ContactList {
             Logger.getLogger(ContactList.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     private Contact getContactFromXmlNode(Node nodeContact){
         String title = "";
         String firstName = "";
@@ -95,12 +95,12 @@ public class ContactList {
                 }
             }
         }
-        
+
         Contact contact = new Contact(firstName, lastName, title, email);
         return contact;
-        
+
     }
-    
+
     public void addContact(Contact contact){
         if(null == docXml){
             return;
@@ -120,10 +120,10 @@ public class ContactList {
         elemContact.appendChild(elem);
         docXml.getDocumentElement().appendChild(elemContact);
         doc2XmlFile(docXml,XML_FILE_PATH);
-        
+
         contactList.put(contact.getKey(), contact);
     }
-    
+
     public void removeContact(Contact contact){
         boolean isFound = false;
         if(null == docXml){
@@ -156,24 +156,24 @@ public class ContactList {
             contactList.remove(contact.getKey());
         }
     }
-    
-    private boolean doc2XmlFile(Document document, String filename){ 
-        boolean ret = true; 
-        try{ 
-            TransformerFactory tFactory = TransformerFactory.newInstance(); 
-            Transformer transformer = tFactory.newTransformer(); 
 
-            DOMSource source = new DOMSource(document); 
-            StreamResult result = new StreamResult(new File(filename)); 
-            transformer.transform(source, result); 
+    private boolean doc2XmlFile(Document document, String filename){
+        boolean ret = true;
+        try{
+            TransformerFactory tFactory = TransformerFactory.newInstance();
+            Transformer transformer = tFactory.newTransformer();
+
+            DOMSource source = new DOMSource(document);
+            StreamResult result = new StreamResult(new File(filename));
+            transformer.transform(source, result);
             }
-        catch(Exception ex) { 
-            ret = false; 
-            ex.printStackTrace(); 
-        } 
-        return ret; 
+        catch(Exception ex) {
+            ret = false;
+            ex.printStackTrace();
+        }
+        return ret;
     }
-    
+
     private static void printElements(ContactList cl){
         HashMap<String,Contact> map = cl.getContactList();
         Set set = map.entrySet();
@@ -182,7 +182,7 @@ public class ContactList {
             System.out.println(i.next());
         }
     }
-    
+
     public HashMap<String,Contact> getContactList(){
         return contactList;
     }
@@ -191,8 +191,8 @@ public class ContactList {
         ContactList cl = new ContactList();
         Contact c = new Contact("aa","ab","ac","ad");
         cl.addContact(c);
-        
-        
+
+
         printElements(cl);
         System.out.println(cl.getContactList().size());
         cl.removeContact(c);

@@ -7,7 +7,7 @@ package com.wang.mymailsender.ui;
 
 /**
  *
- * @author ewawenl
+ * @author Allan
  */
 public class MailPreview extends javax.swing.JPanel {
 

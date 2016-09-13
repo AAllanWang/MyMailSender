@@ -7,13 +7,13 @@ package com.wang.mymailsender.data;
 
 /**
  *
- * @author ewawenl
+ * @author Allan
  */
 public class LoginUserInfo {
     private String user;
     private String password;
     private String smtpServer;
-    
+
     public LoginUserInfo(String strUser, String strPwd, String strSmtpServer){
         user = strUser;
         password = strPwd;

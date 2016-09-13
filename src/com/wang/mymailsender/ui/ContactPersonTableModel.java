@@ -13,18 +13,18 @@ import javax.swing.table.AbstractTableModel;
 
 /**
  *
- * @author ewawenl
+ * @author Allan
  */
 public class ContactPersonTableModel  extends AbstractTableModel {
-    
+
     public ContactPersonTableModel(ContactList cl){
         contactList = cl;
     }
-    
+
     public void setContactList(ContactList cl){
         contactList = cl;
     }
-    
+
     @Override
     public int getRowCount() {
         return contactList.getContactList().size() + 3;
@@ -69,7 +69,7 @@ public class ContactPersonTableModel  extends AbstractTableModel {
         }
         return "";
     }
-    
+
     public boolean isCellEditable(int row, int col) {
         if(col < 4) {
             return false;

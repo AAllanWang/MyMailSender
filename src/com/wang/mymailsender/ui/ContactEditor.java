@@ -33,7 +33,7 @@ package com.wang.mymailsender.ui;
 import com.wang.mymailsender.data.Contact;
 
 public class ContactEditor extends javax.swing.JFrame {
-    
+
     /**
      * Creates new form ContactEditor
      */
@@ -41,7 +41,7 @@ public class ContactEditor extends javax.swing.JFrame {
         mailSenderFrame = mailSender;
         initComponents();
     }
-    
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -207,7 +207,7 @@ public class ContactEditor extends javax.swing.JFrame {
         String lastName = this.textField_lastName.getText();
         String title = this.textField_Title.getText();
         String email = this.textField_email.getText();
-        
+
         Contact contact = new Contact(firstName,lastName,title,email);
         mailSenderFrame.addContact(contact);
         this.dispose();
@@ -216,7 +216,7 @@ public class ContactEditor extends javax.swing.JFrame {
     private void textField_emailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField_emailActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_textField_emailActionPerformed
-    
+
     /**
      * @param args the command line arguments
      */
@@ -224,7 +224,7 @@ public class ContactEditor extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             javax.swing.UIManager.LookAndFeelInfo[] installedLookAndFeels=javax.swing.UIManager.getInstalledLookAndFeels();
@@ -267,5 +267,5 @@ public class ContactEditor extends javax.swing.JFrame {
     private javax.swing.JTextField textField_firstName;
     private javax.swing.JTextField textField_lastName;
     // End of variables declaration//GEN-END:variables
-    
+
 }

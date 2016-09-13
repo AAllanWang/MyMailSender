@@ -36,12 +36,12 @@ import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 public class LoginDialog extends javax.swing.JFrame {
-    
+
     /** Creates new form Antenna */
     public LoginDialog() {
         initComponents();
     }
-    
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -177,16 +177,16 @@ public class LoginDialog extends javax.swing.JFrame {
         textField_smtpServer.getText());
         if(userInfo.validate()){
                 MailUtil mailUtil = new MailUtil();
-		mailUtil.setFromAddress(userInfo.getUser());
-		mailUtil.setUserName(userInfo.getUser());
-		mailUtil.setPassword(userInfo.getPassword());
-		mailUtil.setMailMessageAsHtmlText(true);
-		mailUtil.setSmtpHostName(userInfo.getSmtpServer());
-		mailUtil.setSsl(false);
-		mailUtil.setSendTo(userInfo.getUser());
-		mailUtil.setSmtpPort(MailUtil.NOT_SSL_PORT);
-		try {
-			mailUtil.sendMail("Login MyMailSender","Test mail");
+        mailUtil.setFromAddress(userInfo.getUser());
+        mailUtil.setUserName(userInfo.getUser());
+        mailUtil.setPassword(userInfo.getPassword());
+        mailUtil.setMailMessageAsHtmlText(true);
+        mailUtil.setSmtpHostName(userInfo.getSmtpServer());
+        mailUtil.setSsl(false);
+        mailUtil.setSendTo(userInfo.getUser());
+        mailUtil.setSmtpPort(MailUtil.NOT_SSL_PORT);
+        try {
+//            mailUtil.sendMail("Login MyMailSender","Test mail");
                         //this.setVisible(false);
                         this.dispose();
                         /* Create and display the form */
@@ -194,13 +194,13 @@ public class LoginDialog extends javax.swing.JFrame {
                             public void run() {
                                 new MailSenderFrame(userInfo).setVisible(true);
                             }
-                        });          
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-                        JOptionPane.showMessageDialog(null, "Failed to login", 
+                        });
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+                        JOptionPane.showMessageDialog(null, "Failed to login",
                                 "Error", JOptionPane.ERROR_MESSAGE);
-		}
+        }
         }
     }//GEN-LAST:event_btn_loginActionPerformed
 
@@ -209,7 +209,7 @@ public class LoginDialog extends javax.swing.JFrame {
         this.dispose();
         System.exit(0);
     }//GEN-LAST:event_btn_closeActionPerformed
-    
+
     /**
      * @param args the command line arguments
      */
@@ -217,7 +217,7 @@ public class LoginDialog extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             javax.swing.UIManager.LookAndFeelInfo[] installedLookAndFeels=javax.swing.UIManager.getInstalledLookAndFeels();
@@ -251,7 +251,7 @@ public class LoginDialog extends javax.swing.JFrame {
             }
         });
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_close;
     private javax.swing.JButton btn_login;
@@ -263,5 +263,5 @@ public class LoginDialog extends javax.swing.JFrame {
     private javax.swing.JTextField textField_email;
     private javax.swing.JTextField textField_smtpServer;
     // End of variables declaration//GEN-END:variables
-    
+
 }

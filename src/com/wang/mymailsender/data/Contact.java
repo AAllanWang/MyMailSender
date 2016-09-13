@@ -7,7 +7,7 @@ package com.wang.mymailsender.data;
 
 /**
  *
- * @author ewawenl
+ * @author allan
  */
 public class Contact {
     public Contact(String firstName, String lastName, String title,
@@ -29,11 +29,11 @@ public class Contact {
     public String getTitle(){
         return title_;
     }
-    
+
     public boolean equals(Contact c1){
         return this.getKey().equals(c1.getKey());
     }
-    
+
     public String getKey(){
         return this.firstName_+this.lastName_;
     }

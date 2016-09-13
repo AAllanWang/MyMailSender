@@ -20,7 +20,7 @@ import javax.swing.ListSelectionModel;
 
 /**
  *
- * @author ewawenl
+ * @author Allan
  */
 public class MailSenderFrame extends javax.swing.JFrame  implements ActionListener, MouseListener{
 
@@ -34,28 +34,28 @@ public class MailSenderFrame extends javax.swing.JFrame  implements ActionListen
         contactList = new ContactList();
         initContactTable(contactList);
     }
-    
+
     public MailSenderFrame(LoginUserInfo userInfo) {
         this.dim = Toolkit.getDefaultToolkit().getScreenSize();
         initComponents();
         contactList = new ContactList();
         initContactTable(contactList);
     }
-    
+
     public void initContactTable(ContactList list){
         this.tbl_contactPerson.setToolTipText("Right Click to Edit Contact Info.");
         this.tbl_contactPerson.setModel(new ContactPersonTableModel(list));
         this.tbl_contactPerson.addMouseListener(this);
         this.tbl_contactPerson.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        
+
         popupMenu = new JPopupMenu();
-	popUpDelEntry = new JMenuItem("Delete the selected Contact");
-	popUpDelEntry.addActionListener(this);
-	popUpAddEntry = new JMenuItem("Add New Contact");
-	popUpAddEntry.addActionListener(this);
+    popUpDelEntry = new JMenuItem("Delete the selected Contact");
+    popUpDelEntry.addActionListener(this);
+    popUpAddEntry = new JMenuItem("Add New Contact");
+    popUpAddEntry.addActionListener(this);
         popupMenu.add(popUpAddEntry);
-	popupMenu.addSeparator();
-        popupMenu.add(popUpDelEntry);	
+    popupMenu.addSeparator();
+        popupMenu.add(popUpDelEntry);
     }
 
     /**
@@ -83,6 +83,8 @@ public class MailSenderFrame extends javax.swing.JFrame  implements ActionListen
         jPanel7 = new javax.swing.JPanel();
         textField_prefix = new javax.swing.JTextField();
         combox_appellation = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        textField_subject = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("My Mail Sender");
@@ -133,7 +135,7 @@ public class MailSenderFrame extends javax.swing.JFrame  implements ActionListen
             }
         });
 
-        btn_sendMail.setText("Send");
+        btn_sendMail.setText("Send to Each Person");
         btn_sendMail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_sendMailActionPerformed(evt);
@@ -155,7 +157,7 @@ public class MailSenderFrame extends javax.swing.JFrame  implements ActionListen
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
         );
 
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder("Mail Body"));
@@ -173,7 +175,7 @@ public class MailSenderFrame extends javax.swing.JFrame  implements ActionListen
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
         );
 
         jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Mail Header"));
@@ -199,18 +201,26 @@ public class MailSenderFrame extends javax.swing.JFrame  implements ActionListen
                 .addComponent(combox_appellation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
+        jLabel1.setText("Subject: ");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(btn_preview)
                 .addGap(18, 18, 18)
                 .addComponent(btn_sendMail)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(textField_subject)
+                .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -218,10 +228,14 @@ public class MailSenderFrame extends javax.swing.JFrame  implements ActionListen
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_preview)
                     .addComponent(btn_sendMail))
+                .addGap(11, 11, 11)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textField_subject, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -250,7 +264,7 @@ public class MailSenderFrame extends javax.swing.JFrame  implements ActionListen
 
     private void btn_sendMailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sendMailActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_btn_sendMailActionPerformed
 
     private void btn_previewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_previewActionPerformed
@@ -264,7 +278,7 @@ public class MailSenderFrame extends javax.swing.JFrame  implements ActionListen
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -300,6 +314,7 @@ public class MailSenderFrame extends javax.swing.JFrame  implements ActionListen
     private javax.swing.JButton btn_preview;
     private javax.swing.JButton btn_sendMail;
     private javax.swing.JComboBox<String> combox_appellation;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -313,11 +328,12 @@ public class MailSenderFrame extends javax.swing.JFrame  implements ActionListen
     private javax.swing.JTextArea textArea_logs;
     private javax.swing.JTextArea textArea_mailBody;
     private javax.swing.JTextField textField_prefix;
+    private javax.swing.JTextField textField_subject;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        
+
     }
 
     @Override
@@ -329,17 +345,17 @@ public class MailSenderFrame extends javax.swing.JFrame  implements ActionListen
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        
+
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        
+
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        
+
     }
 
     @Override
@@ -356,7 +372,7 @@ public class MailSenderFrame extends javax.swing.JFrame  implements ActionListen
             removeContact(new Contact(firstName,lastName,title,email));
         }
     }
-    
+
     public void addContact(Contact c){
         contactList.addContact(c);
         this.tbl_contactPerson.updateUI();
@@ -366,4 +382,3 @@ public class MailSenderFrame extends javax.swing.JFrame  implements ActionListen
         this.tbl_contactPerson.updateUI();
     }
 }
-
