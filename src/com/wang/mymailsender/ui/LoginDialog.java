@@ -186,7 +186,7 @@ public class LoginDialog extends javax.swing.JFrame {
         mailUtil.setSendTo(userInfo.getUser());
         mailUtil.setSmtpPort(MailUtil.NOT_SSL_PORT);
         try {
-//            mailUtil.sendMail("Login MyMailSender","Test mail");
+            mailUtil.sendMail("Login MyMailSender","Test mail");
                         //this.setVisible(false);
                         this.dispose();
                         /* Create and display the form */
