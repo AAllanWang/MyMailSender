@@ -77,6 +77,7 @@ public class LoginDialog extends javax.swing.JFrame {
         label_smtpServer.setText("SMTP Server:");
         label_smtpServer.setToolTipText("e.g. smtp.moodybright.com");
 
+        textField_smtpServer.setText("smtp.moodybright.com");
         textField_smtpServer.setToolTipText("The SMTP server of your E-mail.");
 
         pwdField_password.setToolTipText("Password of E-mail");
@@ -165,7 +166,6 @@ public class LoginDialog extends javax.swing.JFrame {
         );
 
         jPanel1.getAccessibleContext().setAccessibleName("");
-        btn_login.getAccessibleContext().setAccessibleName("Login");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -176,31 +176,31 @@ public class LoginDialog extends javax.swing.JFrame {
         new String(pwdField_password.getPassword()),
         textField_smtpServer.getText());
         if(userInfo.validate()){
-                MailUtil mailUtil = new MailUtil();
-        mailUtil.setFromAddress(userInfo.getUser());
-        mailUtil.setUserName(userInfo.getUser());
-        mailUtil.setPassword(userInfo.getPassword());
-        mailUtil.setMailMessageAsHtmlText(true);
-        mailUtil.setSmtpHostName(userInfo.getSmtpServer());
-        mailUtil.setSsl(false);
-        mailUtil.setSendTo(userInfo.getUser());
-        mailUtil.setSmtpPort(MailUtil.NOT_SSL_PORT);
-        try {
-            mailUtil.sendMail("Login MyMailSender","Test mail");
-                        //this.setVisible(false);
-                        this.dispose();
-                        /* Create and display the form */
-                        java.awt.EventQueue.invokeLater(new Runnable() {
-                            public void run() {
-                                new MailSenderFrame(userInfo).setVisible(true);
-                            }
-                        });
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-                        JOptionPane.showMessageDialog(null, "Failed to login",
-                                "Error", JOptionPane.ERROR_MESSAGE);
-        }
+            MailUtil mailUtil = new MailUtil();
+            mailUtil.setFromAddress(userInfo.getUser());
+            mailUtil.setUserName(userInfo.getUser());
+            mailUtil.setPassword(userInfo.getPassword());
+            mailUtil.setMailMessageAsHtmlText(true);
+            mailUtil.setSmtpHostName(userInfo.getSmtpServer());
+            mailUtil.setSsl(false);
+            mailUtil.setSendTo(userInfo.getUser());
+            mailUtil.setSmtpPort(MailUtil.NOT_SSL_PORT);
+            try {
+                mailUtil.sendMail("Login MyMailSender","Test mail");
+                            //this.setVisible(false);
+                            this.dispose();
+                            /* Create and display the form */
+                            java.awt.EventQueue.invokeLater(new Runnable() {
+                                public void run() {
+                                    new MailSenderFrame(userInfo).setVisible(true);
+                                }
+                            });
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Failed to login! " + e.getMessage(),
+                        "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_btn_loginActionPerformed
 

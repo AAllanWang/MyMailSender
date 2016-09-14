@@ -64,8 +64,9 @@ public class ContactEditor extends javax.swing.JFrame {
         btn_Cancel = new javax.swing.JButton();
         btn_Add = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("E-mail Contacts");
+        setAlwaysOnTop(true);
         setResizable(false);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(" Name "));

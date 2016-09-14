@@ -5,8 +5,11 @@
  */
 package com.wang.mymailsender.data;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.util.Collection;
 import java.util.HashMap;
@@ -34,7 +37,25 @@ import org.xml.sax.SAXException;
 public class ContactList {
     public ContactList(){
         contactList = new HashMap<String, Contact>();
+        checkXmlFile();
         initFromXml();
+    }
+    private void checkXmlFile(){
+        try {
+          File xmlFile = new File(XML_FILE_PATH);
+            if(!xmlFile.exists()){
+                xmlFile.createNewFile();
+                FileOutputStream fileOutputStream = new FileOutputStream(xmlFile, true);
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fileOutputStream, "UTF-8"));
+
+		bw.flush();
+		bw.write("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><Root></Root>");
+                bw.close();
+		fileOutputStream.close();
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(ContactList.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     private void initFromXml(){
         DocumentBuilderFactory builderFactory =
@@ -199,7 +220,7 @@ public class ContactList {
         printElements(cl);
         System.out.println(cl.getContactList().size());
     }
-    private final String XML_FILE_PATH = "./conf/contact_list.xml";
+    private final String XML_FILE_PATH = "contact_list.xml";
     private HashMap<String,Contact> contactList;
     private Document docXml;
 }

@@ -146,6 +146,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="textField_smtpServer">
           <Properties>
+            <Property name="text" type="java.lang.String" value="smtp.moodybright.com"/>
             <Property name="toolTipText" type="java.lang.String" value="The SMTP server of your E-mail."/>
           </Properties>
         </Component>

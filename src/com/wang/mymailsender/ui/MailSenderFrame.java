@@ -8,13 +8,19 @@ package com.wang.mymailsender.ui;
 import com.wang.mymailsender.data.Contact;
 import com.wang.mymailsender.data.ContactList;
 import com.wang.mymailsender.data.LoginUserInfo;
+import com.wang.mymailsender.utils.MailUtil;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.ListSelectionModel;
 
@@ -36,6 +42,7 @@ public class MailSenderFrame extends javax.swing.JFrame  implements ActionListen
     }
 
     public MailSenderFrame(LoginUserInfo userInfo) {
+        loginUser = userInfo;
         this.dim = Toolkit.getDefaultToolkit().getScreenSize();
         initComponents();
         contactList = new ContactList();
@@ -49,12 +56,12 @@ public class MailSenderFrame extends javax.swing.JFrame  implements ActionListen
         this.tbl_contactPerson.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         popupMenu = new JPopupMenu();
-    popUpDelEntry = new JMenuItem("Delete the selected Contact");
-    popUpDelEntry.addActionListener(this);
-    popUpAddEntry = new JMenuItem("Add New Contact");
-    popUpAddEntry.addActionListener(this);
+        popUpDelEntry = new JMenuItem("Delete the selected Contact");
+        popUpDelEntry.addActionListener(this);
+        popUpAddEntry = new JMenuItem("Add New Contact");
+        popUpAddEntry.addActionListener(this);
         popupMenu.add(popUpAddEntry);
-    popupMenu.addSeparator();
+        popupMenu.addSeparator();
         popupMenu.add(popUpDelEntry);
     }
 
@@ -182,7 +189,7 @@ public class MailSenderFrame extends javax.swing.JFrame  implements ActionListen
 
         textField_prefix.setText("Dear");
 
-        combox_appellation.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "First Name", "Title + Last Name", "Last Name", "First Name + Last Name", "Title + First Name + Last Name" }));
+        combox_appellation.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "First Name", "Last Name" }));
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -264,11 +271,70 @@ public class MailSenderFrame extends javax.swing.JFrame  implements ActionListen
 
     private void btn_sendMailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_sendMailActionPerformed
         // TODO add your handling code here:
+        HashMap<String,Contact> map = contactList.getContactList();
+        ContactPersonTableModel tableModel = (ContactPersonTableModel)this.tbl_contactPerson.getModel();
+        ArrayList<Integer> enableList = tableModel.getEnableList();
+        String subject = this.textField_subject.getText();
+        String mailHeader = this.textField_prefix.getText();
+        String mailBody = this.textArea_mailBody.getText();
+        for(int i = 0; i < enableList.size(); i++){
+            Contact c = map.get(map.keySet().toArray()[enableList.get(i)]);
+            if(0 == this.combox_appellation.getSelectedIndex()){
+                mailHeader += " "+c.getFirstName()+" ,";
+            }else {
+                mailHeader += " "+c.getLastName()+" ,";
+            }
+            mailHeader += System.getProperty("line.separator");
+            MailUtil mailUtil = new MailUtil();
+            mailUtil.setFromAddress(loginUser.getUser());
+            mailUtil.setUserName(loginUser.getUser());
+            mailUtil.setPassword(loginUser.getPassword());
+            mailUtil.setMailMessageAsHtmlText(false);
+            mailUtil.setSmtpHostName(loginUser.getSmtpServer());
+            mailUtil.setSsl(false);
+            mailUtil.setSendTo(c.getEmail());
+            mailUtil.setSmtpPort(MailUtil.NOT_SSL_PORT);
+            String tmpLog = this.textArea_logs.getText();
+            tmpLog += System.getProperty("line.separator");
+            try {
+                mailUtil.sendMail(subject,mailHeader + mailBody);
+                tmpLog += new Date().toString() + "    Sent to " + c.getEmail() + "Successful!";
+                this.textArea_logs.setText(tmpLog);
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+                tmpLog += new Date().toString() + "    Failed to " + c.getEmail() + "! ";
+                tmpLog += e.getMessage();
+                this.textArea_logs.setText(tmpLog);
+//                JOptionPane.showMessageDialog(null, "Failed to send mail to " + c.getEmail(),
+//                        "Error", JOptionPane.ERROR_MESSAGE);
+            }
 
+        }
     }//GEN-LAST:event_btn_sendMailActionPerformed
 
     private void btn_previewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_previewActionPerformed
         // TODO add your handling code here:
+                /* Create and display the form */
+        HashMap<String,Contact> map = contactList.getContactList();
+        ContactPersonTableModel tableModel = (ContactPersonTableModel)this.tbl_contactPerson.getModel();
+        ArrayList<Integer> enableList = tableModel.getEnableList();
+        String subject = this.textField_subject.getText();
+        String mailHeader = this.textField_prefix.getText();
+        String mailBody = this.textArea_mailBody.getText();
+        if(enableList.size() > 0){
+            Contact c = map.get(map.keySet().toArray()[enableList.get(0)]);
+            if(0 == this.combox_appellation.getSelectedIndex()){
+                mailHeader += " "+c.getFirstName()+" ,";
+            }else {
+                mailHeader += " "+c.getLastName()+" ,";
+            }
+            mailHeader += System.getProperty("line.separator");
+        }
+        
+        final String mailTxt = mailHeader + mailBody;
+        System.out.println(mailTxt);
+        new MailPreview(mailTxt).setVisible(true);
     }//GEN-LAST:event_btn_previewActionPerformed
 
     /**
@@ -310,6 +376,7 @@ public class MailSenderFrame extends javax.swing.JFrame  implements ActionListen
     private JMenuItem popUpAddEntry;
     private JMenuItem popUpDelEntry;
     private ContactList contactList;
+    private LoginUserInfo loginUser;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_preview;
     private javax.swing.JButton btn_sendMail;
