@@ -189,7 +189,7 @@ public class MailSenderFrame extends javax.swing.JFrame  implements ActionListen
 
         textField_prefix.setText("Dear");
 
-        combox_appellation.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "First Name", "Last Name" }));
+        combox_appellation.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "First Name", "Last Name", "Title + First Name", "Title + Last Name", "Title" }));
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -275,15 +275,11 @@ public class MailSenderFrame extends javax.swing.JFrame  implements ActionListen
         ContactPersonTableModel tableModel = (ContactPersonTableModel)this.tbl_contactPerson.getModel();
         ArrayList<Integer> enableList = tableModel.getEnableList();
         String subject = this.textField_subject.getText();
-        String mailHeader = this.textField_prefix.getText();
         String mailBody = this.textArea_mailBody.getText();
         for(int i = 0; i < enableList.size(); i++){
+            String mailHeader = this.textField_prefix.getText();
             Contact c = map.get(map.keySet().toArray()[enableList.get(i)]);
-            if(0 == this.combox_appellation.getSelectedIndex()){
-                mailHeader += " "+c.getFirstName()+" ,";
-            }else {
-                mailHeader += " "+c.getLastName()+" ,";
-            }
+            mailHeader = getMailHeader(mailHeader, c);
             mailHeader += System.getProperty("line.separator");
             MailUtil mailUtil = new MailUtil();
             mailUtil.setFromAddress(loginUser.getUser());
@@ -324,11 +320,7 @@ public class MailSenderFrame extends javax.swing.JFrame  implements ActionListen
         String mailBody = this.textArea_mailBody.getText();
         if(enableList.size() > 0){
             Contact c = map.get(map.keySet().toArray()[enableList.get(0)]);
-            if(0 == this.combox_appellation.getSelectedIndex()){
-                mailHeader += " "+c.getFirstName()+" ,";
-            }else {
-                mailHeader += " "+c.getLastName()+" ,";
-            }
+            mailHeader = getMailHeader(mailHeader, c);
             mailHeader += System.getProperty("line.separator");
         }
         
@@ -337,6 +329,32 @@ public class MailSenderFrame extends javax.swing.JFrame  implements ActionListen
         new MailPreview(mailTxt).setVisible(true);
     }//GEN-LAST:event_btn_previewActionPerformed
 
+    public String getMailHeader(String originHeader, Contact c){
+        String mailHeader = originHeader;
+        switch(this.combox_appellation.getSelectedIndex()){
+            case 0: {
+                mailHeader += " "+c.getFirstName()+" ,";
+                break;
+            }
+            case 1: {
+                mailHeader += " "+c.getLastName()+" ,";
+                break;
+            }
+            case 2: {
+                mailHeader += " " + c.getTitle() +" "+c.getFirstName()+" ,";
+                break;
+            }
+            case 3: {
+                mailHeader += " " + c.getTitle() +" "+c.getLastName()+" ,";
+                break;
+            }
+            case 4: {
+                mailHeader += " " + c.getTitle() +" ,";
+                break;
+            }
+        }
+        return mailHeader;
+    }
     /**
      * @param args the command line arguments
      */
