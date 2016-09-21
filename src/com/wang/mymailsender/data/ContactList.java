@@ -10,8 +10,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.net.URL;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
@@ -123,30 +121,29 @@ public class ContactList {
     }
 
     public void addContact(Contact contact){
-        if(null == docXml){
-            return;
+        if(null != docXml){
+            Element elemContact = docXml.createElement("Contact");
+            Element elem = docXml.createElement("Title");
+            elem.setTextContent(contact.getTitle());
+            elemContact.appendChild(elem);
+            elem = docXml.createElement("FirstName");
+            elem.setTextContent(contact.getFirstName());
+            elemContact.appendChild(elem);
+            elem = docXml.createElement("LastName");
+            elem.setTextContent(contact.getLastName());
+            elemContact.appendChild(elem);
+            elem = docXml.createElement("Email");
+            elem.setTextContent(contact.getEmail());
+            elemContact.appendChild(elem);
+            docXml.getDocumentElement().appendChild(elemContact);
+            doc2XmlFile(docXml,XML_FILE_PATH);
         }
-        Element elemContact = docXml.createElement("Contact");
-        Element elem = docXml.createElement("Title");
-        elem.setTextContent(contact.getTitle());
-        elemContact.appendChild(elem);
-        elem = docXml.createElement("FirstName");
-        elem.setTextContent(contact.getFirstName());
-        elemContact.appendChild(elem);
-        elem = docXml.createElement("LastName");
-        elem.setTextContent(contact.getLastName());
-        elemContact.appendChild(elem);
-        elem = docXml.createElement("Email");
-        elem.setTextContent(contact.getEmail());
-        elemContact.appendChild(elem);
-        docXml.getDocumentElement().appendChild(elemContact);
-        doc2XmlFile(docXml,XML_FILE_PATH);
-
         contactList.put(contact.getKey(), contact);
     }
 
     public void removeContact(Contact contact){
         boolean isFound = false;
+        contactList.remove(contact.getKey());
         if(null == docXml){
             return;
         }
@@ -174,7 +171,6 @@ public class ContactList {
         }
         if(isFound){
             doc2XmlFile(docXml,XML_FILE_PATH);
-            contactList.remove(contact.getKey());
         }
     }
 
